@@ -1,0 +1,37 @@
+body{
+    /*background:url('back.jpg');*/
+}
+.maintale{
+    width: 600px;
+    height: 500px;
+    background-color: #ffffff;
+}
+.writediv{
+    margin: 0 auto;
+    width: 400px;
+    height: 100px;
+    border: 1px solid #5e7c85;
+}
+.tablediv{
+    margin: 0 auto;
+    width: 600px;
+    height: 500px;
+    border: 1px solid #5e7c85;
+}
+.firstString,.lastString{
+   width: 296px;
+}
+.btn{
+	margin: 10px 170px;
+}
+.explain{
+    position: absolute;
+    width: 295px;
+    top: 107px;
+    left: 46px;
+}
+.colorex{
+    height: 20px; 
+    width: 41px;
+    margin-top: 24px;
+}

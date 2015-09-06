@@ -1,0 +1,603 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="HDUB7OSvsD" />
+  
+    <title>Spring AOP的应用 | ran blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="ran">
+    
+    <meta name="description" content="如果你阅读了上一篇文章Spring的简单配置,相信你已经会搭建一个简单Spring IOC的框架了。那么说到IOC我们往往会联想到Spring AOP(面向切面编程),这次教程我们就来搭建一个简单的AOP框架，体验一下AOP的使用和好处。">
+    
+    
+    <meta name="description" content="如果你阅读了上一篇文章Spring的简单配置,相信你已经会搭建一个简单Spring IOC的框架了。那么说到IOC我们往往会联想到Spring AOP(面向切面编程),这次教程我们就来搭建一个简单的AOP框架，体验一下AOP的使用和好处。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring AOP的应用">
+<meta property="og:url" content="http://LBingRan.github.io/2015/04/09/2015-04-09-Spring3AOP/index.html">
+<meta property="og:site_name" content="ran blog">
+<meta property="og:description" content="如果你阅读了上一篇文章Spring的简单配置,相信你已经会搭建一个简单Spring IOC的框架了。那么说到IOC我们往往会联想到Spring AOP(面向切面编程),这次教程我们就来搭建一个简单的AOP框架，体验一下AOP的使用和好处。">
+<meta property="og:image" content="/img/spring/springaopall.png">
+<meta property="og:image" content="/img/spring/springaopresult.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring AOP的应用">
+<meta name="twitter:description" content="如果你阅读了上一篇文章Spring的简单配置,相信你已经会搭建一个简单Spring IOC的框架了。那么说到IOC我们往往会联想到Spring AOP(面向切面编程),这次教程我们就来搭建一个简单的AOP框架，体验一下AOP的使用和好处。">
+
+    
+    <link rel="alternative" href="/sitemap.xml" title="ran blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/fiy.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/logo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/logo.png">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/plan/plan.css" type="text/css">
+    <link rel="stylesheet" href="/high/ht.css" type="text/css">
+    <script type="text/javascript" src="http://api.hitokoto.us/rand?encode=js&charset=utf-8"></script>
+</head>
+
+  <body>
+    <header>
+      <a title="亲，点我放松一下吧~！(单击启动，双击停止)" id="hig" style="float:right;" href="javascript:void(0);" onclick="hig();" ondblclick="location.reload(true);">^_^嗨一下</a>
+<div id="wind" style="display:none">
+    <div id="plane" class="front">  
+        <textarea class="message">感谢您来访ran之家，欢迎常来。----ran^v^</textarea>
+        <button class="send"> 起飞 </button> <br/>
+        <div id="plane_bottom">
+            <a href="javascript:;" id="plane_close"> X </a>
+        </div>
+    </div>
+
+    <div id="wind_container" class="beginning">
+        <div id="left-wing">
+            <div class="top_left curvable"> </div>
+            <div class="bottom_left curvable"> </div>
+            <div class="wing wing1"></div>
+            <div class="wing wing2"></div>
+        </div>
+
+        <div id="right-wing">
+            <div class="top_right curvable"> </div>
+            <div class="bottom_right curvable"> </div>
+            <div class="wing wing3"></div>
+            <div class="wing wing4"></div>
+        </div>
+
+    </div>
+
+</div>
+<div>
+	
+		<div id="imglogo">
+			<a href="javascript:void(0);"><img src="/img/logo.png" alt="ran blog" title="ran blog"/></a>
+		</div>
+		
+		<div id="textlogo">
+			<h1 class="site-name"><a href="/" title="ran blog">ran blog</a></h1>
+			<h2 class="blog-motto"><script>hitokoto()</script></h2>
+		</div>
+		<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+		</a></div>
+		<nav class="animated">
+			<ul>
+				<ul>
+				 
+					<li><a href="/">主页</a></li>
+				
+					<li><a href="/archives">归档</a></li>
+				
+					<li><a href="/laboratory">实验室</a></li>
+				
+					<li><a href="/about">关于</a></li>
+				
+				<li>
+					
+					<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+						<label>Search</label>
+					<input name="s" type="hidden" value= 11705943999323333673 >
+					<input type="text" name="q" size="30" placeholder="搜索"><br>
+					</form>
+				
+				</li>
+			</ul>
+		</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/04/09/2015-04-09-Spring3AOP/" title="Spring AOP的应用" itemprop="url">Spring AOP的应用</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://LBingRan.github.io/about" title="ran" target="_blank" itemprop="author">ran</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-09T12:35:24.000Z" itemprop="datePublished"> 发表于 Apr 9 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具准备"><span class="toc-number">1.</span> <span class="toc-text">工具准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构建环境"><span class="toc-number">2.</span> <span class="toc-text">构建环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置文件"><span class="toc-number">3.</span> <span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#知识点总结："><span class="toc-number">4.</span> <span class="toc-text">知识点总结：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#切面（Aspect）"><span class="toc-number">4.1.</span> <span class="toc-text">切面（Aspect）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接点（Joinpoint）"><span class="toc-number">4.2.</span> <span class="toc-text">连接点（Joinpoint）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通知（Advice）"><span class="toc-number">4.3.</span> <span class="toc-text">通知（Advice）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#切入点（Pointcut）"><span class="toc-number">4.4.</span> <span class="toc-text">切入点（Pointcut）</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>如果你阅读了上一篇文章<a href="http://xhay1122.com/2015/04/09/2015-04-09-Spring3test/" target="_blank" rel="external">Spring的简单配置</a>,相信你已经会搭建一个简单Spring IOC的框架了。那么说到IOC我们往往会联想到Spring AOP(面向切面编程),这次教程我们就来搭建一个简单的AOP框架，体验一下AOP的使用和好处。</p>
+<a id="more"></a>
+<p>为了清晰，我已经给出完整的搭建教程，本教程主要是用注解方式实现的，还有直接通过配置实现AOp的，这里就不详细讲解了，在后面直接给出源码。</p>
+<h3 id="工具准备">工具准备</h3><p>1：MyEclipse 10 + Jdk6.0 及以上</p>
+<p>2：<a href="http://7xi2e1.com1.z0.glb.clouddn.com/spring-framework-3.2.2.RELEASE-dist.zip" target="_blank" rel="external">spring-framework-3.2.2.RELEASE-dist.zip</a> + commons-logging-1.1.3.jar(Java日志实现) + 由于Spring3.2.2官方源代码中没有提供AOP，所以需要添加aopalliance-1.0.jar、aspectjrt.jar、aspectjweaver.jar</p>
+<p><a href="http://7xi2e1.com1.z0.glb.clouddn.com/Spring3AOPjar.rar" target="_blank" rel="external">下载完整jar包</a></p>
+<h3 id="构建环境">构建环境</h3><p>1：在MyEclipse里面新建一个工程，并命名称是Spring3AOP2</p>
+<p>2：把我提供的jar包放入项目的lib文件夹下。</p>
+<h3 id="配置文件">配置文件</h3><p>1: 编写业务类HelloServiceImpl.java<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package com.xhay1122.spring3.aop;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* 项目名称：Spring3AOP</span><br><span class="line">* 类名称：HelloServiceImpl</span><br><span class="line">* 类描述：   目标对象</span><br><span class="line">* 创建人：xhay</span><br><span class="line">* 创建时间：<span class="number">2015</span>-<span class="number">4</span>-<span class="number">9</span> 下午<span class="number">4</span>:<span class="number">23</span>:<span class="number">20</span></span><br><span class="line">* 修改人：xhay</span><br><span class="line">* 修改时间：<span class="number">2015</span>-<span class="number">4</span>-<span class="number">9</span> 下午<span class="number">4</span>:<span class="number">23</span>:<span class="number">20</span></span><br><span class="line">* 修改备注：   </span><br><span class="line">* @version <span class="number">1.0</span></span><br><span class="line">* 软件工程创新实验室  </span><br><span class="line">*/ </span><br><span class="line">public class HelloServiceImpl  &#123;</span><br><span class="line"></span><br><span class="line">	public String say(String _msg) &#123;</span><br><span class="line">		System.out.println(<span class="string">"HelloServiceImpl.say(msg:"</span> + _msg + <span class="string">")"</span>);</span><br><span class="line">		<span class="built_in">return</span> _msg;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>切面处理类TestAnnotationAspect.java</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">package com.xhay1122.spring3.aop;</span><br><span class="line"></span><br><span class="line">import org.aspectj.lang.JoinPoint;</span><br><span class="line">import org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line">import org.aspectj.lang.annotation.After;</span><br><span class="line">import org.aspectj.lang.annotation.AfterReturning;</span><br><span class="line">import org.aspectj.lang.annotation.AfterThrowing;</span><br><span class="line">import org.aspectj.lang.annotation.Around;</span><br><span class="line">import org.aspectj.lang.annotation.Aspect;</span><br><span class="line">import org.aspectj.lang.annotation.Before;</span><br><span class="line">import org.aspectj.lang.annotation.Pointcut;</span><br><span class="line"></span><br><span class="line">@Aspect</span><br><span class="line">public class TestAnnotationAspect &#123;</span><br><span class="line"></span><br><span class="line">	@Pointcut(<span class="string">"execution(* com.xhay1122.spring3.aop.*.*(..))"</span>)</span><br><span class="line">	private void <span class="function"><span class="title">pointCutMethod</span></span>() &#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//声明前置通知</span><br><span class="line">	@Before(<span class="string">"pointCutMethod()"</span>)</span><br><span class="line">	public void <span class="keyword">do</span>Before(JoinPoint jp) &#123;</span><br><span class="line">		System.out.println(<span class="string">"前置通知"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//声明后置通知</span><br><span class="line">	@AfterReturning(pointcut = <span class="string">"pointCutMethod()"</span>, returning = <span class="string">"result"</span>)</span><br><span class="line">	public void <span class="keyword">do</span>AfterReturning(String result) &#123;</span><br><span class="line">		System.out.println(<span class="string">"后置通知"</span>);</span><br><span class="line">		System.out.println(<span class="string">"---"</span> + result + <span class="string">"---"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//声明例外通知</span><br><span class="line">	@AfterThrowing(pointcut = <span class="string">"pointCutMethod()"</span>, throwing = <span class="string">"e"</span>)</span><br><span class="line">	public void <span class="keyword">do</span>AfterThrowing(Exception e) &#123;</span><br><span class="line">		System.out.println(<span class="string">"例外通知"</span>);</span><br><span class="line">		System.out.println(e.getMessage());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//声明最终通知</span><br><span class="line">	@After(<span class="string">"pointCutMethod()"</span>)</span><br><span class="line">	public void <span class="keyword">do</span>After(JoinPoint jp) &#123;</span><br><span class="line">		System.out.println(<span class="string">"最终通知"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//声明环绕通知</span><br><span class="line">	@Around(<span class="string">"pointCutMethod()"</span>)</span><br><span class="line">	public Object <span class="keyword">do</span>Around(ProceedingJoinPoint pjp) throws Throwable &#123;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"进入方法---环绕通知"</span>);</span><br><span class="line">		long time = System.currentTimeMillis();</span><br><span class="line">		Object o = pjp.proceed();</span><br><span class="line">		time = System.currentTimeMillis() - time;</span><br><span class="line">		System.out.println(<span class="string">"执行: "</span> + time + <span class="string">" ms"</span>);</span><br><span class="line">		System.out.println(<span class="string">"退出方法---环绕通知"</span>);</span><br><span class="line">		<span class="built_in">return</span> o;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2：在src目录下面创建一个Spring的配置文件applicationContext.xml，内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;beans xmlns=<span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">       xmlns:xsi=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">       xmlns:context=<span class="string">"http://www.springframework.org/schema/context"</span> </span><br><span class="line">       xmlns:aop=<span class="string">"http://www.springframework.org/schema/aop"</span></span><br><span class="line">	   xmlns:tx=<span class="string">"http://www.springframework.org/schema/tx"</span></span><br><span class="line">       xsi:schemaLocation=<span class="string">"</span><br><span class="line">          http://www.springframework.org/schema/beans</span><br><span class="line">     	  http://www.springframework.org/schema/beans/spring-beans-3.2.xsd</span><br><span class="line">       	  http://www.springframework.org/schema/context </span><br><span class="line">       	  http://www.springframework.org/schema/context/spring-context-3.2.xsd</span><br><span class="line">      	  http://www.springframework.org/schema/aop</span><br><span class="line">	      http://www.springframework.org/schema/aop/spring-aop-3.2.xsd</span><br><span class="line">	      http://www.springframework.org/schema/tx</span><br><span class="line">	      http://www.springframework.org/schema/tx/spring-tx-3.2.xsd</span><br><span class="line">		  "</span>&gt;</span><br><span class="line"></span><br><span class="line">	&lt;aop:aspectj-autoproxy /&gt;</span><br><span class="line">	&lt;!-- &lt;bean class=<span class="string">"org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator"</span> /&gt; --&gt;</span><br><span class="line">      </span><br><span class="line">	&lt;bean id=<span class="string">"aspectBean"</span> class=<span class="string">"com.xhay1122.spring3.aop.TestAnnotationAspect"</span> /&gt;</span><br><span class="line">    &lt;bean id=<span class="string">"aService"</span> class=<span class="string">"com.xhay1122.spring3.aop.HelloServiceImpl"</span>&gt;&lt;/bean&gt;  </span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<p>3: 编写测试代码AOPClient.java<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">package com.xhay1122.spring3.test;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.ApplicationContext;</span><br><span class="line">import org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line">import com.xhay1122.spring3.aop.HelloServiceImpl;</span><br><span class="line"></span><br><span class="line">public class AOPClient &#123;</span><br><span class="line"></span><br><span class="line">	/** </span><br><span class="line">	 * @Title: main </span><br><span class="line">	 * @Description: TODO(这里用一句话描述这个方法的作用) </span><br><span class="line">	 * @param @param args    描述 </span><br><span class="line">	 * @<span class="built_in">return</span> void    返回类型 </span><br><span class="line">	 * 创建人：xhay</span><br><span class="line">	 * 创建时间：<span class="number">2015</span>-<span class="number">4</span>-<span class="number">9</span> 下午<span class="number">3</span>:<span class="number">23</span>:<span class="number">17</span></span><br><span class="line">	 * 修改人：xhay</span><br><span class="line">	 * 修改时间：<span class="number">2015</span>-<span class="number">4</span>-<span class="number">9</span> 下午<span class="number">3</span>:<span class="number">23</span>:<span class="number">17</span></span><br><span class="line">	 * 修改备注：   </span><br><span class="line">	 */</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		// TODO Auto-generated method stub</span><br><span class="line">		ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]&#123;<span class="string">"applicationContext.xml"</span>&#125;);</span><br><span class="line">		</span><br><span class="line">		HelloServiceImpl a = (HelloServiceImpl)ctx.getBean(<span class="string">"aService"</span>);</span><br><span class="line">		a.say(<span class="string">"xhay1122.com"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>到此为止，简单的spring框架就配置好了：<br><img src="/img/spring/springaopall.png" alt="完整的目录结构"></p>
+<p>运行结果：通过结果我们可以看到在我们调用say方法前后，有通知的信息输出<br><img src="/img/spring/springaopresult.png" alt="运行结果"></p>
+<p><a href="http://7xi2e1.com1.z0.glb.clouddn.com/Spring3AOP2.rar" target="_blank" rel="external">注解方式实现AOP源码</a></p>
+<p><a href="http://7xi2e1.com1.z0.glb.clouddn.com/Spring3AOP.rar" target="_blank" rel="external">非注解方式实现AOP源码</a></p>
+<h3 id="知识点总结：">知识点总结：</h3><h4 id="切面（Aspect）">切面（Aspect）</h4><p>官方的抽象定义为“一个关注点的模块化，这个关注点可能会横切多个对象”。“切面”在ApplicationContext中<aop:aspect>来配置。</aop:aspect></p>
+<h4 id="连接点（Joinpoint）">连接点（Joinpoint）</h4><p>程序执行过程中的某一行为，例如，HelloServiceImpl.say()的调用。</p>
+<h4 id="通知（Advice）">通知（Advice）</h4><p>“切面”对于某个“连接点”所产生的动作。其中，一个“切面”可以包含多个“Advice”，例如TestAspect。Advice共有如下5种类型：</p>
+<p>A 前置通知（Before advice）：在某连接点（JoinPoint）之前执行的通知，但这个通知不能阻止连接点前的执行。xml中在<aop:aspect>里面使用<aop:before>元素进行声明；例如，TestAspect中的doBefore方法。注解中使用@Before声明；例如，TestAnnotationAspect中的doBefore方法。</aop:before></aop:aspect></p>
+<p>B 后通知（After advice）：当某连接点退出的时候执行的通知（不论是正常返回还是异常退出）。xml中在<aop:aspect>里面使用<aop:after>元素进行声明。</aop:after></aop:aspect></p>
+<p>C 返回后通知（After return advice）：在某连接点正常完成后执行的通知，不包括抛出异常的情况。xml中在<aop:aspect>里面使用<after-returning>元素进行声明。注解中使用@AfterReturning声明；</after-returning></aop:aspect></p>
+<p>D 环绕通知（Around advice）：包围一个连接点的通知，类似Web中Servlet规范中的Filter的doFilter方法。可以在方法的调用前后完成自定义的行为，也可以选择不执行。xml中在<aop:aspect>里面使用<aop:around>元素进行声明。</aop:around></aop:aspect></p>
+<p>E 抛出异常后通知（After throwing advice）：在方法抛出异常退出时执行的通知。xml中在<aop:aspect>里面使用<aop:after-throwing>元素进行声明。</aop:after-throwing></aop:aspect></p>
+<p>通知执行顺序：前置通知→环绕通知连接点之前→连接点执行→环绕通知连接点之后→返回通知→后通知→(如果发生异常)异常通知→后通知</p>
+<h4 id="切入点（Pointcut）">切入点（Pointcut）</h4><p>匹配连接点的断言，在AOP中通知和一个切入点表达式关联。示例中的所有通知所关注的连接点，都由切入点表达式execution(<em> com.xhay1122.spring3.aop.</em>.*(..))来决定。</p>
+<p>● 切入点表达式</p>
+<p>execution：用于匹配方法执行的连接点；</p>
+<p>within：用于匹配指定类型内的方法执行；</p>
+<p>this：用于匹配当前AOP代理对象类型的执行方法；注意是AOP代理对象的类型匹配，这样就可能包括引入接口也类型匹配；注意this中使用的表达式必须是完整类名，不支持通配符；</p>
+<p>target：用于匹配当前目标对象类型的执行方法；注意是目标对象的类型匹配，这样就不包括引入接口也类型匹配；注意target中使用的表达式必须是完整类名，不支持通配符；</p>
+<p>args：用于匹配当前执行的方法传入的参数为指定类型的执行方法；参数类型列表中的参数必须是完整类名，通配符不支持；args属于动态切入点，这种切入点开销非常大，非特殊情况最好不要使用；</p>
+<p>@within：用于匹配所以持有指定注解类型内的方法；注解类型也必须是完整类名；</p>
+<p>@target：用于匹配当前目标对象类型的执行方法，其中目标对象持有指定的注解；注解类型也必须是完整类名；</p>
+<p>@args：用于匹配当前执行的方法传入的参数持有指定注解的执行；注解类型也必须是完整类名；</p>
+<p>@annotation：用于匹配当前执行方法持有指定注解的方法；注解类型也必须是完整类名；</p>
+<p>bean：Spring AOP扩展的，AspectJ没有对于指示符，用于匹配特定名称的Bean对象的执行方法；</p>
+<p>reference pointcut：表示引用其他命名切入点，只有注解风格支持，XML风格不支持。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Framework/">Framework</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/spring/">spring</a><a href="/tags/springAOP/">springAOP</a><a href="/tags/spring配置/">spring配置</a><a href="/tags/框架/">框架</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://LBingRan.github.io/2015/04/09/2015-04-09-Spring3AOP/" data-title="Spring AOP的应用 | ran blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/04/24/2015-04-24-SpringMVCDemo1/" title="搭建SpringMVC框架,实现简单登陆功能">
+  <strong>上一篇：</strong><br/>
+  <span>
+  搭建SpringMVC框架,实现简单登陆功能</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/04/09/2015-04-09-Spring3test/"  title="Spring的简单配置">
+ <strong>下一篇：</strong><br/> 
+ <span>Spring的简单配置
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/04/09/2015-04-09-Spring3AOP/" data-title="Spring AOP的应用" data-url="http://LBingRan.github.io/2015/04/09/2015-04-09-Spring3AOP/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具准备"><span class="toc-number">1.</span> <span class="toc-text">工具准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构建环境"><span class="toc-number">2.</span> <span class="toc-text">构建环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置文件"><span class="toc-number">3.</span> <span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#知识点总结："><span class="toc-number">4.</span> <span class="toc-text">知识点总结：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#切面（Aspect）"><span class="toc-number">4.1.</span> <span class="toc-text">切面（Aspect）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接点（Joinpoint）"><span class="toc-number">4.2.</span> <span class="toc-text">连接点（Joinpoint）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通知（Advice）"><span class="toc-number">4.3.</span> <span class="toc-text">通知（Advice）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#切入点（Pointcut）"><span class="toc-number">4.4.</span> <span class="toc-text">切入点（Pointcut）</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Framework/" title="Framework">Framework<sup>5</sup></a></li>
+		
+			<li><a href="/categories/IOS/" title="IOS">IOS<sup>8</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>1</sup></a></li>
+		
+			<li><a href="/categories/software/" title="工具配置">工具配置<sup>2</sup></a></li>
+		
+			<li><a href="/categories/技术实现/" title="技术实现">技术实现<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/IOS/" title="IOS">IOS<sup>8</sup></a></li>
+		
+			<li><a href="/tags/框架/" title="框架">框架<sup>4</sup></a></li>
+		
+			<li><a href="/tags/spring/" title="spring">spring<sup>4</sup></a></li>
+		
+			<li><a href="/tags/springMVC/" title="springMVC">springMVC<sup>3</sup></a></li>
+		
+			<li><a href="/tags/软件配置/" title="软件配置">软件配置<sup>3</sup></a></li>
+		
+			<li><a href="/tags/登陆/" title="登陆">登陆<sup>2</sup></a></li>
+		
+			<li><a href="/tags/spring配置/" title="spring配置">spring配置<sup>2</sup></a></li>
+		
+			<li><a href="/tags/bitnami/" title="bitnami">bitnami<sup>2</sup></a></li>
+		
+			<li><a href="/tags/redmine/" title="redmine">redmine<sup>2</sup></a></li>
+		
+			<li><a href="/tags/subversion/" title="subversion">subversion<sup>2</sup></a></li>
+		
+			<li><a href="/tags/springIOC/" title="springIOC">springIOC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/canvas/" title="canvas">canvas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/斜切风格/" title="斜切风格">斜切风格<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MyBaties/" title="MyBaties">MyBaties<sup>1</sup></a></li>
+		
+			<li><a href="/tags/NSOperation/" title="NSOperation">NSOperation<sup>1</sup></a></li>
+		
+			<li><a href="/tags/企业发布/" title="企业发布">企业发布<sup>1</sup></a></li>
+		
+			<li><a href="/tags/KVC/" title="KVC">KVC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/NSOperationQueue/" title="NSOperationQueue">NSOperationQueue<sup>1</sup></a></li>
+		
+			<li><a href="/tags/NSThread/" title="NSThread">NSThread<sup>1</sup></a></li>
+		
+			<li><a href="/tags/GCD/" title="GCD">GCD<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/GCD/" style="font-size: 10px;">GCD</a><a href="/tags/IOS/" style="font-size: 20px;">IOS</a><a href="/tags/KVC/" style="font-size: 10px;">KVC</a><a href="/tags/KVO/" style="font-size: 10px;">KVO</a><a href="/tags/MyBaties/" style="font-size: 10px;">MyBaties</a><a href="/tags/NSOperation/" style="font-size: 10px;">NSOperation</a><a href="/tags/NSOperationQueue/" style="font-size: 10px;">NSOperationQueue</a><a href="/tags/NSThread/" style="font-size: 10px;">NSThread</a><a href="/tags/UITableViewCell/" style="font-size: 10px;">UITableViewCell</a><a href="/tags/ViewController方法调用次序/" style="font-size: 10px;">ViewController方法调用次序</a><a href="/tags/bitnami/" style="font-size: 12.5px;">bitnami</a><a href="/tags/canvas/" style="font-size: 10px;">canvas</a><a href="/tags/ehcache/" style="font-size: 10px;">ehcache</a><a href="/tags/redmine/" style="font-size: 12.5px;">redmine</a><a href="/tags/spring/" style="font-size: 17.5px;">spring</a><a href="/tags/springAOP/" style="font-size: 10px;">springAOP</a><a href="/tags/springIOC/" style="font-size: 10px;">springIOC</a><a href="/tags/springMVC/" style="font-size: 15px;">springMVC</a><a href="/tags/spring配置/" style="font-size: 12.5px;">spring配置</a><a href="/tags/subversion/" style="font-size: 12.5px;">subversion</a><a href="/tags/svn/" style="font-size: 10px;">svn</a><a href="/tags/tortoisesvn/" style="font-size: 10px;">tortoisesvn</a><a href="/tags/web前端/" style="font-size: 10px;">web前端</a><a href="/tags/xhay/" style="font-size: 10px;">xhay</a><a href="/tags/企业发布/" style="font-size: 10px;">企业发布</a><a href="/tags/斜切风格/" style="font-size: 10px;">斜切风格</a><a href="/tags/框架/" style="font-size: 17.5px;">框架</a><a href="/tags/登陆/" style="font-size: 12.5px;">登陆</a><a href="/tags/缓存/" style="font-size: 10px;">缓存</a><a href="/tags/转屏/" style="font-size: 10px;">转屏</a><a href="/tags/软件配置/" style="font-size: 15px;">软件配置</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.xrpmoon.com/blog/" target="_blank" title=" Java与Ripple怎么玩？">鹏凌三千</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://likai1024.com/" target="_blank" title=" 李凯的博客热爱开源文化">李凯的博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bininhere.github.io/" target="_blank" title=" 大牛的博客">BINBLOG</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/sitemap.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m ran. For now I&#39;m a graduate student in Chongqing University of Technology.  <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/u/3151858255" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/LBingRun" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:751384171@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> © 2015 
+		
+		<a href="http://LBingRan.github.io/about" target="_blank" title="ran">ran</a>
+		
+		   
+
+		
+		<a href="http://LBingRan.github.io/sitemap.xml" target="_blank" title="sitemap.xml">sitemap</a>
+		
+		</p>
+
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/plan/plan.js"></script>
+<script src="/high/Crazy.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+
+  $(".hitokoto > a").attr('href','javascript:void(0);');
+  $(".hitokoto").attr('title','');
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      aah = $('article h3'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(aah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+/*$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});*/
+var $this = $('.share');
+$this.append('<div class="bdsharebuttonbox"><a href="#" class="bds_more" style="padding: 0px;" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a></div>');
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"LBingRan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?85298d264d0fe161f46283f2becac312";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>

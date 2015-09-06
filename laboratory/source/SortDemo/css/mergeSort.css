@@ -1,0 +1,74 @@
+@CHARSET "UTF-8";
+
+body{
+	TEXT-ALIGN: center;
+}
+
+.mian{
+	width: 100px;
+	margin: 0 auto;
+}
+
+.jumbotron{
+	margin-bottom: 0px;
+}
+.alert{
+	margin-bottom: 0px;
+}
+
+.inputAlert{
+	width: 55%;
+	margin: 0 auto;
+}
+
+.charPic{
+	width: 100%;
+	height: 400px;
+	position: absolute;
+}
+
+.countSelect{
+	height: 34px;
+}
+
+.numCom{
+	width: 10px;
+	background: #46b8da;
+	position: absolute;
+	bottom: 0px;
+	border-left: 1px solid;
+	border-right: 1px solid;
+	border-color: #fff;
+}
+
+.numCom:hover{
+	background: #4cae4c;
+}
+
+#listArea{
+	font-size: 20px;
+}
+
+#startDeom{
+	margin-left: 10px;
+}
+
+.speedBar{
+	margin-left: 10px;
+}
+
+.flagColor{
+	left: 10px;
+}
+
+.flagColor span{
+	line-height: 2;
+}
+
+#nextStartDeom{
+	margin-left: 10px;
+}
+
+#processTitle{
+	font-size: 20px;
+}

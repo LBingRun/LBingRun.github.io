@@ -1,0 +1,131 @@
+body{
+    background:url('back.jpg');
+    
+}
+*{
+    text-align: center;
+}
+.maintale{
+    width: 600px;
+    height: 500px;
+    background-color: #ffffff;
+}
+.writediv{
+    margin: 0 auto;
+    width: 400px;
+    height: 100px;
+    border: 1px solid #5e7c85;
+}
+.tablediv{
+    margin: 0 auto;
+    width: 500px;
+    height: 500px;
+    border: 1px solid #5e7c85;
+}
+.firstString,.lastString{
+   width: 296px;
+}
+.btn{
+	margin: 10px 164px 0px;
+}
+.explain{
+    position: absolute;
+    width: 295px;
+    top: 107px;
+    left: 46px;
+}
+.colorex{
+    height: 20px; 
+    width: 41px;
+    margin-top: 24px;
+}
+.tabletop{
+    /*background-color: red;*/
+    height: 30px;
+    width: 470px;
+    margin-right: 30px;
+}
+.toptale{
+    height: 30px;
+    width: 470px;
+}
+.tableleft{
+    /*background-color: green;*/
+    width: 30px;
+    height: 470px;
+    float: right;
+}
+.lefttable{
+    width: 30px;
+    height: 470px;
+}
+.tableright{
+   /* background-color: rgb(0, 0, 0);*/
+    height: 470px;
+    width: 470px;
+    float: left;
+}
+.righttable{
+    height: 470px;
+    width: 470px;
+}
+.commonStr{
+    position: absolute;
+    top: 110px;
+    right: 10px;
+    width: 360px;
+    height: 360px;
+}
+.ktable{
+    width: 360px;
+    height: 360px;
+}
+.commonStrtop{
+  height: 30px;
+  /*background-color: red;*/
+  width: 330px;
+}
+.top{
+  height: 30px;
+  width: 330px;
+}
+.commonStrbuttom{
+  height: 330px;
+  /*background-color: #000;*/
+  width: 360px;
+}
+.commonStrleft{
+   height: 330px;
+   /*background-color: #fff;*/
+   width: 30px;
+   float: right;
+}
+.left{
+  height: 330px;
+  width: 30px;
+}
+.commonStrright{
+   height: 330px;
+   /*background-color: green;*/
+   width: 330px;
+   float: left;
+}
+.right{
+   height: 330px;
+   width: 330px;
+}
+.outvalue{
+   position: absolute;
+   width: 360px;
+   height: 100px;
+   right: 10px;
+   top: 500px;
+   /*background-color: red;*/
+}
+.kmin{
+   position: absolute;
+   right: 10px;
+   width: 360px;
+   height: 20px;
+   top: 480px;
+}
