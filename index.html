@@ -113,6 +113,72 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/01/05/2017-1-05-CocoapodsCreatpodspec/" title="Cocoapods上创建专属的podspec" itemprop="url">Cocoapods上创建专属的podspec</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://LBingRun.github.io/about" title="ran" target="_blank" itemprop="author">ran</a>
+		
+  <p class="article-time">
+    <time datetime="2017-01-05T12:23:10.000Z" itemprop="datePublished"> 发表于 Jan 5 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="背景">背景</h3><p>目前而言，CocoaPods因该是我们项目第三方依赖库管理的不二选择了。什么？你还没用过CocoaPods！信不信打哭你！认真脸，可以这么说，我们项目所需要用到的主流第三方库在CocoaPods上都能找到，同时我们也可以用它来方便的管理和更新我们项目引入的第三方库。这些功能是不是已经很棒了，对于单人开发来说，其实已经够了。毕竟万事都有个然后嘛，是不。团队开发的时候，你就会发现对于项目开发而言如果没有一个很好的管理方法，开发者的项目代码就显得冗余了些，其实很多的时候，我们都是专注于自己的那块业务开发，对于团队的其它代码并不关心，加之近年组件化编程的思想也越来越流行。podspec貌似是一个不错的选择方案。艾艾～不好意思废话说得有点多。</p>
+<h3 id="podspec_是什么？">podspec 是什么？</h3><p>这样说吧，其实它就是一个Git仓库，专门存放你组件代码的地方，和你平时把代码提交到自己的git或者svn没什么两样，只不过它的remote端在GitHub、CODING、Bitbucket…上而已</p>
+<h3 id="创建_Spec_Repo">创建 Spec Repo</h3><p>第一步 我们需要创建一个 Git仓库<br>      前几天去CODING上注册了个账户，所以就用CODING来玩玩。当然GitHub、CODING、Bitbucket上步骤都是相似的所以大家不要惊慌。<br>      <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pod repo add [Private Repo Name] [CODING HTTPS clone URL]</span></span><br><span class="line">$ pod repo add LBSpceRepoTest git@git.coding.net:Ran_/LBSpceRepoTest.git</span><br></pre></td></tr></table></figure></p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2017/01/05/2017-1-05-CocoapodsCreatpodspec/#more">Read More</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/IOS/">IOS</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/IOS/">IOS</a><a href="/tags/工具/">工具</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://LBingRun.github.io/2017/01/05/2017-1-05-CocoapodsCreatpodspec/#comments" class="ds-thread-count comments-count-link" data-thread-key="2017/01/05/2017-1-05-CocoapodsCreatpodspec/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/09/03/2015-9-03-IOSAchive/" title="Ios 7.1 以上系统企业级发布解决方案" itemprop="url">Ios 7.1 以上系统企业级发布解决方案</a>
   </h1>
   <p class="article-author">By
@@ -697,71 +763,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/05/07/2015-05-07-SpringMVCDemo2/" title="注解方式实现登录，文件上传" itemprop="url">注解方式实现登录，文件上传</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://LBingRun.github.io/about" title="ran" target="_blank" itemprop="author">ran</a>
-		
-  <p class="article-time">
-    <time datetime="2015-05-07T13:58:18.000Z" itemprop="datePublished"> 发表于 May 7 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>经过前面的学习，我们已经初步掌握了spring的用法，搭建简单的spring环境已经没问题了。在上一篇教程当中(<a href="/2015/04/24/2015-04-24-SpringMVCDemo1/">搭建SpringMVC框架,实现简单登陆功能</a> ),我们已经能够使用spring mvc实现简单的登陆了。</p>
-<p>这次我们尝试用『注解』的方式完成以下功能：<br>    1、开发登陆功能（登陆成功跳转到登陆成功页面，失败给出相应的错误提示）<br>    2、在登陆成功页面实现文件上传，并保存到指定目录下。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/05/07/2015-05-07-SpringMVCDemo2/#more">Read More</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Framework/">Framework</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/spring/">spring</a><a href="/tags/springMVC/">springMVC</a><a href="/tags/框架/">框架</a><a href="/tags/登陆/">登陆</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://LBingRun.github.io/2015/05/07/2015-05-07-SpringMVCDemo2/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/05/07/2015-05-07-SpringMVCDemo2/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -781,7 +782,7 @@
 		
 			<li><a href="/categories/Framework/" title="Framework">Framework<sup>5</sup></a></li>
 		
-			<li><a href="/categories/IOS/" title="IOS">IOS<sup>8</sup></a></li>
+			<li><a href="/categories/IOS/" title="IOS">IOS<sup>9</sup></a></li>
 		
 			<li><a href="/categories/java/" title="java">java<sup>1</sup></a></li>
 		
@@ -798,7 +799,7 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/IOS/" title="IOS">IOS<sup>8</sup></a></li>
+			<li><a href="/tags/IOS/" title="IOS">IOS<sup>9</sup></a></li>
 		
 			<li><a href="/tags/框架/" title="框架">框架<sup>4</sup></a></li>
 		
@@ -818,7 +819,9 @@
 		
 			<li><a href="/tags/subversion/" title="subversion">subversion<sup>2</sup></a></li>
 		
-			<li><a href="/tags/springIOC/" title="springIOC">springIOC<sup>1</sup></a></li>
+			<li><a href="/tags/ViewController方法调用次序/" title="ViewController方法调用次序">ViewController方法调用次序<sup>1</sup></a></li>
+		
+			<li><a href="/tags/转屏/" title="转屏">转屏<sup>1</sup></a></li>
 		
 			<li><a href="/tags/canvas/" title="canvas">canvas<sup>1</sup></a></li>
 		
@@ -826,17 +829,15 @@
 		
 			<li><a href="/tags/MyBaties/" title="MyBaties">MyBaties<sup>1</sup></a></li>
 		
-			<li><a href="/tags/NSOperation/" title="NSOperation">NSOperation<sup>1</sup></a></li>
-		
-			<li><a href="/tags/企业发布/" title="企业发布">企业发布<sup>1</sup></a></li>
-		
 			<li><a href="/tags/KVC/" title="KVC">KVC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/工具/" title="工具">工具<sup>1</sup></a></li>
+		
+			<li><a href="/tags/KVO/" title="KVO">KVO<sup>1</sup></a></li>
 		
 			<li><a href="/tags/NSOperationQueue/" title="NSOperationQueue">NSOperationQueue<sup>1</sup></a></li>
 		
-			<li><a href="/tags/NSThread/" title="NSThread">NSThread<sup>1</sup></a></li>
-		
-			<li><a href="/tags/GCD/" title="GCD">GCD<sup>1</sup></a></li>
+			<li><a href="/tags/springIOC/" title="springIOC">springIOC<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -846,7 +847,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/GCD/" style="font-size: 10px;">GCD</a><a href="/tags/IOS/" style="font-size: 20px;">IOS</a><a href="/tags/KVC/" style="font-size: 10px;">KVC</a><a href="/tags/KVO/" style="font-size: 10px;">KVO</a><a href="/tags/MyBaties/" style="font-size: 10px;">MyBaties</a><a href="/tags/NSOperation/" style="font-size: 10px;">NSOperation</a><a href="/tags/NSOperationQueue/" style="font-size: 10px;">NSOperationQueue</a><a href="/tags/NSThread/" style="font-size: 10px;">NSThread</a><a href="/tags/UITableViewCell/" style="font-size: 10px;">UITableViewCell</a><a href="/tags/ViewController方法调用次序/" style="font-size: 10px;">ViewController方法调用次序</a><a href="/tags/bitnami/" style="font-size: 12.5px;">bitnami</a><a href="/tags/canvas/" style="font-size: 10px;">canvas</a><a href="/tags/ehcache/" style="font-size: 10px;">ehcache</a><a href="/tags/redmine/" style="font-size: 12.5px;">redmine</a><a href="/tags/spring/" style="font-size: 17.5px;">spring</a><a href="/tags/springAOP/" style="font-size: 10px;">springAOP</a><a href="/tags/springIOC/" style="font-size: 10px;">springIOC</a><a href="/tags/springMVC/" style="font-size: 15px;">springMVC</a><a href="/tags/spring配置/" style="font-size: 12.5px;">spring配置</a><a href="/tags/subversion/" style="font-size: 12.5px;">subversion</a><a href="/tags/svn/" style="font-size: 10px;">svn</a><a href="/tags/tortoisesvn/" style="font-size: 10px;">tortoisesvn</a><a href="/tags/web前端/" style="font-size: 10px;">web前端</a><a href="/tags/xhay/" style="font-size: 10px;">xhay</a><a href="/tags/企业发布/" style="font-size: 10px;">企业发布</a><a href="/tags/斜切风格/" style="font-size: 10px;">斜切风格</a><a href="/tags/框架/" style="font-size: 17.5px;">框架</a><a href="/tags/登陆/" style="font-size: 12.5px;">登陆</a><a href="/tags/缓存/" style="font-size: 10px;">缓存</a><a href="/tags/转屏/" style="font-size: 10px;">转屏</a><a href="/tags/软件配置/" style="font-size: 15px;">软件配置</a>
+       <a href="/tags/GCD/" style="font-size: 10px;">GCD</a><a href="/tags/IOS/" style="font-size: 20px;">IOS</a><a href="/tags/KVC/" style="font-size: 10px;">KVC</a><a href="/tags/KVO/" style="font-size: 10px;">KVO</a><a href="/tags/MyBaties/" style="font-size: 10px;">MyBaties</a><a href="/tags/NSOperation/" style="font-size: 10px;">NSOperation</a><a href="/tags/NSOperationQueue/" style="font-size: 10px;">NSOperationQueue</a><a href="/tags/NSThread/" style="font-size: 10px;">NSThread</a><a href="/tags/UITableViewCell/" style="font-size: 10px;">UITableViewCell</a><a href="/tags/ViewController方法调用次序/" style="font-size: 10px;">ViewController方法调用次序</a><a href="/tags/bitnami/" style="font-size: 12.5px;">bitnami</a><a href="/tags/canvas/" style="font-size: 10px;">canvas</a><a href="/tags/ehcache/" style="font-size: 10px;">ehcache</a><a href="/tags/redmine/" style="font-size: 12.5px;">redmine</a><a href="/tags/spring/" style="font-size: 17.5px;">spring</a><a href="/tags/springAOP/" style="font-size: 10px;">springAOP</a><a href="/tags/springIOC/" style="font-size: 10px;">springIOC</a><a href="/tags/springMVC/" style="font-size: 15px;">springMVC</a><a href="/tags/spring配置/" style="font-size: 12.5px;">spring配置</a><a href="/tags/subversion/" style="font-size: 12.5px;">subversion</a><a href="/tags/svn/" style="font-size: 10px;">svn</a><a href="/tags/tortoisesvn/" style="font-size: 10px;">tortoisesvn</a><a href="/tags/web前端/" style="font-size: 10px;">web前端</a><a href="/tags/xhay/" style="font-size: 10px;">xhay</a><a href="/tags/企业发布/" style="font-size: 10px;">企业发布</a><a href="/tags/工具/" style="font-size: 10px;">工具</a><a href="/tags/斜切风格/" style="font-size: 10px;">斜切风格</a><a href="/tags/框架/" style="font-size: 17.5px;">框架</a><a href="/tags/登陆/" style="font-size: 12.5px;">登陆</a><a href="/tags/缓存/" style="font-size: 10px;">缓存</a><a href="/tags/转屏/" style="font-size: 10px;">转屏</a><a href="/tags/软件配置/" style="font-size: 15px;">软件配置</a>
     </div>
   </div>
 
@@ -914,7 +915,7 @@
 		<a href="mailto:751384171@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
 		
 	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> © 2015 
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> © 2017 
 		
 		<a href="http://LBingRun.github.io/about" target="_blank" title="ran">ran</a>
 		

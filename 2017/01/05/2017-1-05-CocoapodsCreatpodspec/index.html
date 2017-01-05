@@ -1,0 +1,595 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="HDUB7OSvsD" />
+  
+    <title>Cocoapods上创建专属的podspec | ran blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="ran">
+    
+    <meta name="description" content="背景目前而言，CocoaPods因该是我们项目第三方依赖库管理的不二选择了。什么？你还没用过CocoaPods！信不信打哭你！认真脸，可以这么说，我们项目所需要用到的主流第三方库在CocoaPods上都能找到，同时我们也可以用它来方便的管理和更新我们项目引入的第三方库。这些功能是不是已经很棒了，对于单人开发来说，其实已经够了。毕竟万事都有个然后嘛，是不。团队开发的时候，你就会发现对于项目开发而言如果没有一个很好的管理方法，开发者的项目代码就显得冗余了些，其实很多的时候，我们都是专注于自己的那块业务开发，对于团队的其它代码并不关心，加之近年组件化编程的思想也越来越流行。podspec貌似是一个不错的选择方案。艾艾～不好意思废话说得有点多。
+podspec 是什么？这样说吧，其实它就是一个Git仓库，专门存放你组件代码的地方，和你平时把代码提交到自己的git或者svn没什么两样，只不过它的remote端在GitHub、CODING、Bitbucket…上而已
+创建 Spec Repo第一步 我们需要创建一个 Git仓库      前几天去CODING上注册了个账户，所以就用CODING来玩玩。当然GitHub、CODING、Bitbucket上步骤都是相似的所以大家不要惊慌。      12# pod repo add [Private Repo Name] [CODING HTTPS clone URL]$ pod repo add LBSpceRepoTest git@git.coding.net:Ran_/LBSpceRepoTest.git">
+    
+    
+    <meta name="description" content="背景目前而言，CocoaPods因该是我们项目第三方依赖库管理的不二选择了。什么？你还没用过CocoaPods！信不信打哭你！认真脸，可以这么说，我们项目所需要用到的主流第三方库在CocoaPods上都能找到，同时我们也可以用它来方便的管理和更新我们项目引入的第三方库。这些功能是不是已经很棒了，对于单人开发来说，其实已经够了。毕竟万事都有个然后嘛，是不。团队开发的时候，你就会发现对于项目开发而言如">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cocoapods上创建专属的podspec">
+<meta property="og:url" content="http://LBingRun.github.io/2017/01/05/2017-1-05-CocoapodsCreatpodspec/index.html">
+<meta property="og:site_name" content="ran blog">
+<meta property="og:description" content="背景目前而言，CocoaPods因该是我们项目第三方依赖库管理的不二选择了。什么？你还没用过CocoaPods！信不信打哭你！认真脸，可以这么说，我们项目所需要用到的主流第三方库在CocoaPods上都能找到，同时我们也可以用它来方便的管理和更新我们项目引入的第三方库。这些功能是不是已经很棒了，对于单人开发来说，其实已经够了。毕竟万事都有个然后嘛，是不。团队开发的时候，你就会发现对于项目开发而言如">
+<meta property="og:image" content="/img/Spce/1.png">
+<meta property="og:image" content="/img/Spce/2.png">
+<meta property="og:image" content="/img/Spce/3.png">
+<meta property="og:image" content="/img/Spce/4.png">
+<meta property="og:image" content="/img/Spce/5.png">
+<meta property="og:image" content="/img/Spce/6.png">
+<meta property="og:image" content="/img/Spce/7.png">
+<meta property="og:image" content="/img/Spce/9.png">
+<meta property="og:image" content="/img/Spce/8.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cocoapods上创建专属的podspec">
+<meta name="twitter:description" content="背景目前而言，CocoaPods因该是我们项目第三方依赖库管理的不二选择了。什么？你还没用过CocoaPods！信不信打哭你！认真脸，可以这么说，我们项目所需要用到的主流第三方库在CocoaPods上都能找到，同时我们也可以用它来方便的管理和更新我们项目引入的第三方库。这些功能是不是已经很棒了，对于单人开发来说，其实已经够了。毕竟万事都有个然后嘛，是不。团队开发的时候，你就会发现对于项目开发而言如">
+
+    
+    <link rel="alternative" href="/sitemap.xml" title="ran blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/fiy.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/logo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/logo.png">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/plan/plan.css" type="text/css">
+    <link rel="stylesheet" href="/high/ht.css" type="text/css">
+    <script type="text/javascript" src="http://api.hitokoto.us/rand?encode=js&charset=utf-8"></script>
+</head>
+
+  <body>
+    <header>
+      <a title="亲，点我放松一下吧~！(单击启动，双击停止)" id="hig" style="float:right;" href="javascript:void(0);" onclick="hig();" ondblclick="location.reload(true);">^_^嗨一下</a>
+<div id="wind" style="display:none">
+    <div id="plane" class="front">  
+        <textarea class="message">感谢您来访ran之家，欢迎常来。----ran^v^</textarea>
+        <button class="send"> 起飞 </button> <br/>
+        <div id="plane_bottom">
+            <a href="javascript:;" id="plane_close"> X </a>
+        </div>
+    </div>
+
+    <div id="wind_container" class="beginning">
+        <div id="left-wing">
+            <div class="top_left curvable"> </div>
+            <div class="bottom_left curvable"> </div>
+            <div class="wing wing1"></div>
+            <div class="wing wing2"></div>
+        </div>
+
+        <div id="right-wing">
+            <div class="top_right curvable"> </div>
+            <div class="bottom_right curvable"> </div>
+            <div class="wing wing3"></div>
+            <div class="wing wing4"></div>
+        </div>
+
+    </div>
+
+</div>
+<div>
+	
+		<div id="imglogo">
+			<a href="javascript:void(0);"><img src="/img/logo.png" alt="ran blog" title="ran blog"/></a>
+		</div>
+		
+		<div id="textlogo">
+			<h1 class="site-name"><a href="/" title="ran blog">ran blog</a></h1>
+			<h2 class="blog-motto"><script>hitokoto()</script></h2>
+		</div>
+		<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+		</a></div>
+		<nav class="animated">
+			<ul>
+				<ul>
+				 
+					<li><a href="/">主页</a></li>
+				
+					<li><a href="/archives">归档</a></li>
+				
+					<li><a href="/laboratory">实验室</a></li>
+				
+					<li><a href="/about">关于</a></li>
+				
+				<li>
+					
+					<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+						<label>Search</label>
+					<input name="s" type="hidden" value= 11705943999323333673 >
+					<input type="text" name="q" size="30" placeholder="搜索"><br>
+					</form>
+				
+				</li>
+			</ul>
+		</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/01/05/2017-1-05-CocoapodsCreatpodspec/" title="Cocoapods上创建专属的podspec" itemprop="url">Cocoapods上创建专属的podspec</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://LBingRun.github.io/about" title="ran" target="_blank" itemprop="author">ran</a>
+		
+  <p class="article-time">
+    <time datetime="2017-01-05T12:23:10.000Z" itemprop="datePublished"> 发表于 Jan 5 2017</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#podspec_是什么？"><span class="toc-text">podspec 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建_Spec_Repo"><span class="toc-text">创建 Spec Repo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#鸡汤来一发"><span class="toc-text">鸡汤来一发</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="背景">背景</h3><p>目前而言，CocoaPods因该是我们项目第三方依赖库管理的不二选择了。什么？你还没用过CocoaPods！信不信打哭你！认真脸，可以这么说，我们项目所需要用到的主流第三方库在CocoaPods上都能找到，同时我们也可以用它来方便的管理和更新我们项目引入的第三方库。这些功能是不是已经很棒了，对于单人开发来说，其实已经够了。毕竟万事都有个然后嘛，是不。团队开发的时候，你就会发现对于项目开发而言如果没有一个很好的管理方法，开发者的项目代码就显得冗余了些，其实很多的时候，我们都是专注于自己的那块业务开发，对于团队的其它代码并不关心，加之近年组件化编程的思想也越来越流行。podspec貌似是一个不错的选择方案。艾艾～不好意思废话说得有点多。</p>
+<h3 id="podspec_是什么？">podspec 是什么？</h3><p>这样说吧，其实它就是一个Git仓库，专门存放你组件代码的地方，和你平时把代码提交到自己的git或者svn没什么两样，只不过它的remote端在GitHub、CODING、Bitbucket…上而已</p>
+<h3 id="创建_Spec_Repo">创建 Spec Repo</h3><p>第一步 我们需要创建一个 Git仓库<br>      前几天去CODING上注册了个账户，所以就用CODING来玩玩。当然GitHub、CODING、Bitbucket上步骤都是相似的所以大家不要惊慌。<br>      <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pod repo add [Private Repo Name] [CODING HTTPS clone URL]</span></span><br><span class="line">$ pod repo add LBSpceRepoTest git@git.coding.net:Ran_/LBSpceRepoTest.git</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<pre><code>如果没什么意外的话 <span class="built_in">cd</span>到~/.cocoapods/repos看下，现在应该多了个LBSpceRepoTest目录了。OK！第一步创建私有Spec Repo完成
+</code></pre><p>第二步  我们需要创建一个.podspec文件<br>       自己创建一个.podspec文件的方法我在这里不想多说了，我们直接简单粗暴点，用最简单的方法来创建，避免出现遗忘或者其它错误你们会骂我。好废话少说了，接下来cd到你想创建组件项目的目录，输入以下命令<br>       <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod lib create LBSpceRepoTest</span><br></pre></td></tr></table></figure></p>
+<pre><code>然后会出现几个你需要填的东西，可以参照下我的步骤，不要怕，开心脸
+</code></pre><p><img src="/img/Spce/1.png" alt="如图"><br>       大概意思就是，选择什么语言，是否需要创建一个demo工程，选哪个测试框架，基于视图的测试你想做什么，然后再来个屌爆了的自己的专属前缀。又搞定一步，你现在可以看到刚刚那个目录下是酱紫的<br><img src="/img/Spce/2.png" alt="如图"><br>       打开项目目录是酱紫的，现在该有的文件都有了，开心脸<br><img src="/img/Spce/3.png" alt="如图"></p>
+<p>第三步  向Pods文件夹中添加库文件和资源<br>       一般来说我们的组件资源文件都是放在Pods/…/Classes 文件夹当中，如图所示，我随意添加了个DDDViewController{.m .h}文件<br><img src="/img/Spce/4.png" alt="如图"><br>       然后cd到Example文件夹 执行<br>       <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod update</span><br></pre></td></tr></table></figure></p>
+<pre><code>然后再打开就可以看到我们刚刚添加的文件了，开心脸
+</code></pre><p>第四步  提交组件代码<br>       <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit <span class="operator">-s</span> -m <span class="string">"Initial Commit of Library"</span> <span class="comment">#初始化提交</span></span><br><span class="line">$ git remote add origin git@git.coding.net:Ran_/LBSpceRepoTest.git <span class="comment">#添加远端仓库</span></span><br><span class="line">$ git tag -m <span class="string">"first release"</span> <span class="number">0.1</span>.<span class="number">0</span>  <span class="comment">#因为podspec文件中获取Git版本控制的项目还需要tag号，so 打上一个tag</span></span><br><span class="line">$ git push --tags     <span class="comment">#推送tag到远端仓库</span></span><br></pre></td></tr></table></figure></p>
+<p>第五步  .podspec配置<br>       <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Be sure to run `pod lib lint PodLibrary.podspec' to ensure this is a</span></span><br><span class="line"><span class="comment"># valid spec before submitting.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Any lines starting with a # are optional, but their use is encouraged</span></span><br><span class="line"><span class="comment"># To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">Pod::Spec.new <span class="keyword">do</span> |s|</span><br><span class="line">s.name             = <span class="string">'LBSpceRepoTest'</span></span><br><span class="line">s.version          = <span class="string">'0.1.0'</span></span><br><span class="line"><span class="comment">#项目总结</span></span><br><span class="line">s.summary          = <span class="string">'My LBSpceRepoTest is a repo for LBSpceRepoTest'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># This description is used to generate tags and improve search results.</span></span><br><span class="line"><span class="comment">#   * Think: What does it do? Why did you write it? What is the focus?</span></span><br><span class="line"><span class="comment">#   * Try to keep it short, snappy and to the point.</span></span><br><span class="line"><span class="comment">#   * Write the description between the DESC delimiters below.</span></span><br><span class="line"><span class="comment">#   * Finally, don't worry about the indent, CocoaPods strips it!</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#项目描述，貌似描述的文字要多于总结的，否则会报警告</span></span><br><span class="line">s.description      = &lt;&lt;-DESC</span><br><span class="line">My Private UIButton+Positioning assembly</span><br><span class="line">* MarkDown format</span><br><span class="line">* It is a nice world!</span><br><span class="line">TODO: Add long description of the pod here.</span><br><span class="line">DESC</span><br><span class="line"><span class="comment">#项目的主页，要求可以访问</span></span><br><span class="line">s.homepage         = <span class="string">'https://git.coding.net'</span></span><br><span class="line"><span class="comment">#项目的证书类型，一开始在git 就要配置好</span></span><br><span class="line">s.license          = &#123; :<span class="built_in">type</span> =&gt; <span class="string">'MIT'</span>, :file =&gt; <span class="string">'LICENSE'</span> &#125;</span><br><span class="line">s.author           = &#123; <span class="string">'姓名'</span> =&gt; <span class="string">'邮箱'</span> &#125; <span class="comment">#记得自己改为自己的喔</span></span><br><span class="line"><span class="comment">#最重要的一部分，项目的源地址，目前只支持Http\Https, 不支持SSH，小编曾经犯了一个低级错误，将这个source指向了以前建立的一个Spec.git,然后一直报"The `PodLibrary.podspec` specification does not validate"的错误，小编又不会调试，所以很丢人的折腾了两个小时。</span></span><br><span class="line"></span><br><span class="line">s.source           = &#123; :git =&gt; <span class="string">'https://git.coding.net/Ran_/LBSpceRepoTest.git'</span>, :tag =&gt; s.version.to_s &#125;</span><br><span class="line"><span class="comment"># s.social_media_url = 'https://twitter.com/&lt;TWITTER_USERNAME&gt;'</span></span><br><span class="line"></span><br><span class="line">s.ios.deployment_target = <span class="string">'8.0'</span></span><br><span class="line"><span class="comment">#表示项目的源文件在Pods/Classes文件夹下</span></span><br><span class="line">s.source_files = <span class="string">'LBSpceRepoTest/Classes/**/*'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># s.resource_bundles = &#123;</span></span><br><span class="line"><span class="comment">#   'PodLibrary' =&gt; ['LBSpceRepoTest/Assets/*.png']</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line"><span class="comment">#项目的依赖库等等</span></span><br><span class="line"><span class="comment"># s.public_header_files = 'Pod/Classes/**/*.h'</span></span><br><span class="line"><span class="comment"># s.frameworks = 'UIKit', 'MapKit'</span></span><br><span class="line"><span class="comment"># s.dependency 'AFNetworking', '~&gt; 2.3'</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>第六步  本地验证<br>       <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod lib lint</span><br></pre></td></tr></table></figure></p>
+<pre><code>如图所示，说明就是没问题的
+</code></pre><p><img src="/img/Spce/5.png" alt="如图"></p>
+<p>第七步  .podspec验证<br>       <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod spec lint LBSpceRepoTest.podspec</span><br></pre></td></tr></table></figure></p>
+<pre><code>如图所示，说明就是没问题的
+</code></pre><p><img src="/img/Spce/6.png" alt="如图"></p>
+<p>第八步  注册Trunk<br>       小编已经猜到你没有Trunk账号了，么事，注册很简单<br>       <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加上--verbose可以输出详细debug信息，方便出错时查看。</span></span><br><span class="line"><span class="comment"># pod trunk register 8888888@163.com "bingoran" --verbose</span></span><br><span class="line">$  pod trunk register 你的邮箱 <span class="string">"你的昵称"</span> --verbose</span><br></pre></td></tr></table></figure></p>
+<pre><code>注册完成之后会给你的邮箱发个邮件,进入邮箱邮件里面有个链接,需要点击确认一下，<span class="ok">ok</span> 开心脸
+</code></pre><p>第九步  发布<br>       <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># --use-libraries --allow-warnings</span></span><br><span class="line">$  pod trunk push LBSpceRepoTest.podspec</span><br></pre></td></tr></table></figure></p>
+<pre><code>如图所示，说明发布成功了，接下来就是等待审核了，估计要个一两天吧，该做的都做了，看运气啰，开心脸
+随便提醒你们一下，我这个名字已经提交过了，自己换个名字从新走一遍流程吧，什么，不愿意试，打哭你信不信！
+</code></pre><p><img src="/img/Spce/7.png" alt="如图"></p>
+<p>第十步  验证<br>       当然这一步是建立在审核通过了才行的，没通过的话是这个样子的<br><img src="/img/Spce/9.png" alt="如图"></p>
+<pre><code><span class="comment"><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  pod search LBSpceRepoTest</span><br></pre></td></tr></table></figure></span>
+
+如图所示，说明可以用了，自己在demo项目测试下吧
+</code></pre><p><img src="/img/Spce/8.png" alt="如图"></p>
+<h3 id="鸡汤来一发">鸡汤来一发</h3><p>要么忙着活，要么忙着死 —— 《肖生克的救赎》</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/IOS/">IOS</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/IOS/">IOS</a><a href="/tags/工具/">工具</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://LBingRun.github.io/2017/01/05/2017-1-05-CocoapodsCreatpodspec/" data-title="Cocoapods上创建专属的podspec | ran blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/09/03/2015-9-03-IOSAchive/"  title="Ios 7.1 以上系统企业级发布解决方案">
+ <strong>下一篇：</strong><br/> 
+ <span>Ios 7.1 以上系统企业级发布解决方案
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/01/05/2017-1-05-CocoapodsCreatpodspec/" data-title="Cocoapods上创建专属的podspec" data-url="http://LBingRun.github.io/2017/01/05/2017-1-05-CocoapodsCreatpodspec/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#podspec_是什么？"><span class="toc-text">podspec 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建_Spec_Repo"><span class="toc-text">创建 Spec Repo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#鸡汤来一发"><span class="toc-text">鸡汤来一发</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Framework/" title="Framework">Framework<sup>5</sup></a></li>
+		
+			<li><a href="/categories/IOS/" title="IOS">IOS<sup>9</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>1</sup></a></li>
+		
+			<li><a href="/categories/software/" title="工具配置">工具配置<sup>2</sup></a></li>
+		
+			<li><a href="/categories/技术实现/" title="技术实现">技术实现<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/IOS/" title="IOS">IOS<sup>9</sup></a></li>
+		
+			<li><a href="/tags/框架/" title="框架">框架<sup>4</sup></a></li>
+		
+			<li><a href="/tags/spring/" title="spring">spring<sup>4</sup></a></li>
+		
+			<li><a href="/tags/springMVC/" title="springMVC">springMVC<sup>3</sup></a></li>
+		
+			<li><a href="/tags/软件配置/" title="软件配置">软件配置<sup>3</sup></a></li>
+		
+			<li><a href="/tags/登陆/" title="登陆">登陆<sup>2</sup></a></li>
+		
+			<li><a href="/tags/spring配置/" title="spring配置">spring配置<sup>2</sup></a></li>
+		
+			<li><a href="/tags/bitnami/" title="bitnami">bitnami<sup>2</sup></a></li>
+		
+			<li><a href="/tags/redmine/" title="redmine">redmine<sup>2</sup></a></li>
+		
+			<li><a href="/tags/subversion/" title="subversion">subversion<sup>2</sup></a></li>
+		
+			<li><a href="/tags/ViewController方法调用次序/" title="ViewController方法调用次序">ViewController方法调用次序<sup>1</sup></a></li>
+		
+			<li><a href="/tags/转屏/" title="转屏">转屏<sup>1</sup></a></li>
+		
+			<li><a href="/tags/canvas/" title="canvas">canvas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/斜切风格/" title="斜切风格">斜切风格<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MyBaties/" title="MyBaties">MyBaties<sup>1</sup></a></li>
+		
+			<li><a href="/tags/KVC/" title="KVC">KVC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/工具/" title="工具">工具<sup>1</sup></a></li>
+		
+			<li><a href="/tags/KVO/" title="KVO">KVO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/NSOperationQueue/" title="NSOperationQueue">NSOperationQueue<sup>1</sup></a></li>
+		
+			<li><a href="/tags/springIOC/" title="springIOC">springIOC<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/GCD/" style="font-size: 10px;">GCD</a><a href="/tags/IOS/" style="font-size: 20px;">IOS</a><a href="/tags/KVC/" style="font-size: 10px;">KVC</a><a href="/tags/KVO/" style="font-size: 10px;">KVO</a><a href="/tags/MyBaties/" style="font-size: 10px;">MyBaties</a><a href="/tags/NSOperation/" style="font-size: 10px;">NSOperation</a><a href="/tags/NSOperationQueue/" style="font-size: 10px;">NSOperationQueue</a><a href="/tags/NSThread/" style="font-size: 10px;">NSThread</a><a href="/tags/UITableViewCell/" style="font-size: 10px;">UITableViewCell</a><a href="/tags/ViewController方法调用次序/" style="font-size: 10px;">ViewController方法调用次序</a><a href="/tags/bitnami/" style="font-size: 12.5px;">bitnami</a><a href="/tags/canvas/" style="font-size: 10px;">canvas</a><a href="/tags/ehcache/" style="font-size: 10px;">ehcache</a><a href="/tags/redmine/" style="font-size: 12.5px;">redmine</a><a href="/tags/spring/" style="font-size: 17.5px;">spring</a><a href="/tags/springAOP/" style="font-size: 10px;">springAOP</a><a href="/tags/springIOC/" style="font-size: 10px;">springIOC</a><a href="/tags/springMVC/" style="font-size: 15px;">springMVC</a><a href="/tags/spring配置/" style="font-size: 12.5px;">spring配置</a><a href="/tags/subversion/" style="font-size: 12.5px;">subversion</a><a href="/tags/svn/" style="font-size: 10px;">svn</a><a href="/tags/tortoisesvn/" style="font-size: 10px;">tortoisesvn</a><a href="/tags/web前端/" style="font-size: 10px;">web前端</a><a href="/tags/xhay/" style="font-size: 10px;">xhay</a><a href="/tags/企业发布/" style="font-size: 10px;">企业发布</a><a href="/tags/工具/" style="font-size: 10px;">工具</a><a href="/tags/斜切风格/" style="font-size: 10px;">斜切风格</a><a href="/tags/框架/" style="font-size: 17.5px;">框架</a><a href="/tags/登陆/" style="font-size: 12.5px;">登陆</a><a href="/tags/缓存/" style="font-size: 10px;">缓存</a><a href="/tags/转屏/" style="font-size: 10px;">转屏</a><a href="/tags/软件配置/" style="font-size: 15px;">软件配置</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.xrpmoon.com/blog/" target="_blank" title=" Java与Ripple怎么玩？">鹏凌三千</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://likai1024.com/" target="_blank" title=" 李凯的博客热爱开源文化">李凯的博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bininhere.github.io/" target="_blank" title=" 大牛的博客">BINBLOG</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/sitemap.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m ran. For now I&#39;m a graduate student in Chongqing University of Technology.  <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/u/3151858255" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/LBingRun" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:751384171@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> © 2017 
+		
+		<a href="http://LBingRun.github.io/about" target="_blank" title="ran">ran</a>
+		
+		   
+
+		
+		<a href="http://LBingRun.github.io/sitemap.xml" target="_blank" title="sitemap.xml">sitemap</a>
+		
+		</p>
+
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/plan/plan.js"></script>
+<script src="/high/Crazy.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+
+  $(".hitokoto > a").attr('href','javascript:void(0);');
+  $(".hitokoto").attr('title','');
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      aah = $('article h3'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(aah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+/*$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});*/
+var $this = $('.share');
+$this.append('<div class="bdsharebuttonbox"><a href="#" class="bds_more" style="padding: 0px;" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a></div>');
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"LBingRan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a8455ea2a3ca861dfd7eaa5f412ed81a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>
